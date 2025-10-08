@@ -141,7 +141,7 @@ class list{
         //         fastptr=fastptr->next;
         //     }
         // }
-        while (fastptr != NULL && fastptr->next->nex != NULL)
+        while (fastptr != NULL && fastptr->next->next != NULL)
         {
             slowptr = slowptr->next;
             fastptr = fastptr->next->next;
