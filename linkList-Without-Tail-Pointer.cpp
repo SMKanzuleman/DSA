@@ -129,6 +129,25 @@ class list{
         int a=search(val);
         deletek(a);
     }
+    void mid(){
+        node* fastptr=head;
+        node* slowptr=head;
+        int count=0;
+        // while(fastptr->next!=NULL){
+        //     slowptr=slowptr->next;
+        //     count++;
+        //     fastptr=fastptr->next;
+        //     if (fastptr->next != NULL){
+        //         fastptr=fastptr->next;
+        //     }
+        // }
+        while (fastptr != NULL && fastptr->next->nex != NULL)
+        {
+            slowptr = slowptr->next;
+            fastptr = fastptr->next->next;
+        }
+        cout<<slowptr->data;
+    }
 };
 
 int main() {
@@ -140,9 +159,11 @@ int main() {
     l1.insertStart(aa);
     l1.insertEnd(bb);
     l1.insertEnd(cc);
+    l1.insertEnd(dd);
     l1.display();
-    l1.sd(aa);
-    l1.display();
+    l1.mid();
+    // l1.delEnd();
+    // l1.display();
     // cout<<"Found at index "<<l1.search(dd);
     return 0;
 }
