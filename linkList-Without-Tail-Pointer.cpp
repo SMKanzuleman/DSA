@@ -129,10 +129,13 @@ class list{
         int a=search(val);
         deletek(a);
     }
-    void mid(){
+    node* mid(){
+        if(head==NULL){
+            return ;
+        }
         node* fastptr=head;
         node* slowptr=head;
-        int count=0;
+        // int count=0;
         // while(fastptr->next!=NULL){
         //     slowptr=slowptr->next;
         //     count++;
@@ -146,7 +149,7 @@ class list{
             slowptr = slowptr->next;
             fastptr = fastptr->next->next;
         }
-        cout<<slowptr->data;
+        return slowptr;
     }
 };
 
