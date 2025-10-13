@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+// Time complexity: O(n)
 class node
 {
 public:
@@ -53,7 +54,7 @@ public:
                 temp = temp->next;
             newNode->next = temp->next;
             temp->next = newNode;
-            temp = newNode;
+            // temp = newNode;
             return;
         }
     }
