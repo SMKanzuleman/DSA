@@ -182,6 +182,24 @@ public:
         deleteAtanyIndex(index);
         return;
     }
+    // Time Complexity: O(n)
+    void reverse(){
+        if(head==NULL || head==nullptr){
+            return;
+        }
+        node*temp=head;
+        node*prev=nullptr;
+        node*next=nullptr;
+        do{
+            next=temp->next;
+            temp->next=prev;
+            prev=temp;
+            temp=next;
+        }while (temp != head);
+        head->next = prev;
+        head=prev;
+        return;
+    }
 };
 int main()
 {
@@ -190,16 +208,24 @@ int main()
     cl.insertAtEnd(20);
     cl.insertAtEnd(30);
     cl.insertAtEnd(40);
-    cl.insertAtStart(10);
-    cl.insertAtStart(20);
-    cl.insertAtStart(30);
-    cl.insertAtStart(40);
+    cl.insertAtEnd(50);
+    cl.insertAtEnd(60);
+    cl.insertAtEnd(70);
+    cl.insertAtEnd(80);
+    cl.insertAtEnd(90);
+    cl.insertAtEnd(100);
+    // cl.insertAtStart(10);
+    // cl.insertAtStart(20);
+    // cl.insertAtStart(30);
+    // cl.insertAtStart(40);
     cl.display();
-    cout<<cl.getNodes()<<endl;
+    cl.reverse();
+    cl.display();
+    // cout<<cl.getNodes()<<endl;
     // cl.deleteAtStart();
     // cll.deleteAtEnd();
     // cl.deleteAtanyIndex(3);
-    cl.display();
+    // cl.display();
 
     cout << "Bye Bye" << endl;
     return 0;
