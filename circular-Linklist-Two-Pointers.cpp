@@ -17,10 +17,12 @@ class cLL {
     node *head;
     node *tail;
     public:
+    // Time Complexity: O(1)
     cLL() {
         head = NULL;
         tail = NULL;
     }
+    // Time Complexity: O(1)
     void insertAtStart(int val){
         node *newNode = new node(val);
         if (head == NULL){
@@ -34,6 +36,7 @@ class cLL {
             head=newNode;
         }
     }
+    // Time Complexity: O(1)
     void insertAtEnd(int val)
     {
         node *newNode = new node(val);
@@ -50,6 +53,7 @@ class cLL {
             tail = newNode;
         }
     }
+    // Time Complexity: O(n)
     void display()
     {
         if (head == NULL)
@@ -65,6 +69,56 @@ class cLL {
         } while (temp != head);
         cout << " ]" << endl;
     }
+    // Time Complexity: O(1)
+    void deleteAtStart(){
+        if(head!=NULL){
+            tail->next=head->next;
+            head->next=NULL;
+            head=tail->next;
+        }
+
+    }
+    // Time Complexity: O(n)
+    void deleteAtEnd()
+    {
+        if (head != NULL){
+            node *temp=head;
+            while(temp->next!=tail)
+                temp=temp->next;
+            tail->next=NULL;
+            tail=temp;
+        }
+
+    }
+    // Time Complexity: O(n)
+    void insertAtanyIndex(int val,int pos){
+        node*newNode=new node(val);
+        node*temp=head;
+        for(int i=0;i<pos-1;i++){
+            temp=temp->next;
+        }
+        newNode->next=temp->next;
+        temp->next=newNode;
+        return;
+    }
+    // Time Complexity: O(n)
+    void deleteAtanyIndex(int pos){
+        if(pos==0){
+            deleteAtStart();
+            return;
+        }
+        else if(head==NULL){
+            return;
+        }
+        else{
+            node*temp=head;
+            for(int i=0;i<pos-1;i++){
+                temp=temp->next;
+            }
+            temp->next=temp->next->next;
+            return;
+        }
+    }
 };
 
 int main() {
@@ -77,6 +131,7 @@ int main() {
     cll.insertAtEnd(2);
     cll.insertAtEnd(3);
     cll.insertAtEnd(4);
+    cll.insertAtanyIndex(5,2);
     cll.display();
     cout << "Bye Bye" << endl;
     return 0;
