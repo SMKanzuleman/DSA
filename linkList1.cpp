@@ -13,55 +13,86 @@ class node{
         next=NULL;
     }
 };
+
 class list{
     node*head;
     public:
     list(){
         head=NULL;
     }
-    void insertStart(node* val){
-        if(head!=NULL){
-            val->next=head;
-            head=val;
+    //Time Complexity O(1)
+    void insertStart(int val){
+        node* newNode = new node(val);
+        if(head==NULL){
+            head = newNode;
+            return;
         }
-        else
-            head=val;
-    }
-    void insertEnd(node* val){
-        node*temp=head;
-        while(temp->next!=NULL){
-            temp=temp->next;
+        else{
+            newNode->next = head;
+            head = newNode;
+            return;
         }
-        temp->next=val;
-        val->next=NULL;
     }
-    void insert(node* val,int pos){
+    //Time Complelxity O(n)
+    void insertEnd(int val){
+        node* newNode = new node(val);
+        if (head == NULL)
+        {
+            head = newNode;
+            return;
+        }
+        else{
+            node *temp = head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+            newNode->next = NULL;
+            return;
+        }
+
+    }
+   // Time Complexity O(n)
+    void insertAtAnyIndex(int val,int pos){
         if (pos == 0 || head==NULL)
         {
             insertStart(val);
             return;
         }
         else if(pos>getnodes()){
-            return ;
-
+            return;
         }
-        else if(head!=NULL){
+        else{
+            node* newNode = new node(val);
             node*temp=head;
             for(int i=0;i<pos-1;i++){
                 temp=temp->next;
             }
-            val->next=temp->next;
-            temp->next=val;
+            newNode->next=temp->next;
+            temp->next=newNode;
         }
     }
+    // Time Complexity O(n)
     void display(){
-        node*temp=head;
-        while(temp!=NULL){
-            cout<<temp->data<<" , ";
-            temp=temp->next;
+        if(head==NULL){
+            return;
         }
-        cout<<endl;
+        else{
+            node *temp = head;
+            cout<<"[ ";
+            while (temp != NULL)
+            {
+                cout << temp->data;
+                temp = temp->next;
+                if (temp != NULL)
+                    cout << ",";
+            }
+            cout<<" ]"<< endl;
+        }
+
     }
+    // Time Complexity O(n)
     int getnodes(){
         node*temp=head;
         int count=0;
@@ -71,11 +102,12 @@ class list{
         }
         return count;
     }
-    int search(node* val){
+    // Time Compexity O(n)
+    int search(int val){
         node*temp=head;
         int index=0;
         while(temp!=NULL){
-            if(temp->data==val->data){
+            if(temp->data==val){
                     return index;
             }
             index++;
@@ -83,67 +115,77 @@ class list{
         }
         return -1;
     }
-    void delStart(){
-        if(head!= NULL){    
-            node*temp=head;
-            head=head->next;
-            temp->next=NULL;
-            delete temp;
+     // Time Complexity O(1) for best case, O(n) for worst case
+    void deleteAtStart(){
+        if(head == NULL){
+            return;
         }
-        return;
+        else{
+            node *temp = head;
+            head = head->next;
+            temp->next = NULL;
+            delete temp;
+            return;
+        }
     }
-    void delEnd(){
+    // Time Complexity O(n)
+    void deleteAtEnd(){
         if(head==NULL){
             return;
         }
-        if (head->next == NULL)
-        { // Case 2: Only one node
-
+        else if (head->next == NULL)
+        {
+            delete head;
             head = NULL;
             return;
         }
-        // if(head!=NULL){      
-            node*temp=head;
-            while(temp->next->next!=NULL)
-                temp=temp->next;
-            temp->next=NULL;
-
+        else{
+            node *temp = head;
+            while (temp->next->next != NULL)
+                temp = temp->next;
+            delete temp->next;
+            temp->next = NULL;
+        }
     }
-    void deletek(int pos){
+    // Time Complexity O(n)
+    void deleteAtAnyIndex(int pos){
         if(head==NULL || pos<0 || pos >= getnodes()){
             return;
         }
-        if(pos==0){
-            delStart();
+        else if(pos==0){
+            deleteAtStart();
             return;
         }
-        node* temp=head;
-        for(int i=0;i<pos-1;i++){
-            temp=temp->next;
+        else
+        {
+            node *temp = head;
+            for (int i = 0; i < pos - 1; i++){
+                temp = temp->next;
+            }
+            node *toDelete = temp->next;
+            temp->next=toDelete->next;
+            delete toDelete;
+            return;
         }
-        node *aa = temp->next;
-        temp->next = aa->next;
-        delete aa;
     }
-    void sd(node* val){
-        int a=search(val);
-        deletek(a);
+    // Time Complexity O(n)
+    void deleteWithData(int val){
+        int a = search(val);
+        if (a != -1) {
+            deleteAtAnyIndex(a);
+            return;
+        }
+        else{
+            return;
+        }
     }
+   // Time Complexity O(n)
     node* mid(){
         if(head==NULL){
-            return ;
+            return nullptr;
         }
         node* fastptr=head;
         node* slowptr=head;
-        // int count=0;
-        // while(fastptr->next!=NULL){
-        //     slowptr=slowptr->next;
-        //     count++;
-        //     fastptr=fastptr->next;
-        //     if (fastptr->next != NULL){
-        //         fastptr=fastptr->next;
-        //     }
-        // }
         while (fastptr != NULL && fastptr->next->next != NULL)
         {
             slowptr = slowptr->next;
@@ -151,22 +193,45 @@ class list{
         }
         return slowptr;
     }
+    // Time Complexity O(n)
+    void reverse(){
+        if(head==nullptr){
+            return;
+        }
+        else{
+            node*temp=head;
+            node*prev=nullptr;
+            node*next=nullptr;
+            while (temp != NULL)
+            {
+                next=temp->next;
+                temp->next=prev;
+                prev=temp;
+                temp=next;
+            }
+            head=prev;
+            return;
+        }
+    }
 };
 
 int main() {
     list l1;
-    node *aa=new node(55);
-    node *bb=new node(65);
-    node *cc=new node(75);
-    node *dd=new node(95);
-    l1.insertStart(aa);
-    l1.insertEnd(bb);
-    l1.insertEnd(cc);
-    l1.insertEnd(dd);
+    l1.insertStart(55);
+    l1.insertEnd(65);
+    l1.insertEnd(75);
+    l1.insertEnd(95);
     l1.display();
-    l1.mid();
-    // l1.delEnd();
-    // l1.display();
-    // cout<<"Found at index "<<l1.search(dd);
-    return 0;
+    l1.reverse();
+    l1.display();
+     node* midNode = l1.mid();
+     if(midNode != NULL) {
+         cout << "Mid element is " << midNode->data << endl;
+     }
+     l1.deleteAtEnd();
+     l1.display();
+     cout<<"Found at index "<<l1.search(65) << endl;
+     l1.deleteWithData(65);
+     l1.display();
+     return 0;
 }
