@@ -25,17 +25,43 @@ class dLL
     node *head;
 
 public:
+    // Time Complexity: O(1)
     dLL()
     {
         head = NULL;
     }
+    // Time Complexity: O(1)
     void insertAtStart(int val)
     {
         node *newNode = new node(val);
-        newNode->next = head;
-        head->prev = newNode;
+        if(head==NULL){
+            head=newNode;
+            return;
+        }
+        else{
+            newNode->next = head;
+            head->prev = newNode;
+            head=newNode;
+        }
  
     }
+    // Time Complexity: O(n)
+    void insertAtEnd(int val){
+        node* newNode=new node(val);
+        if(head==NULL){
+            head=newNode;
+            return;
+        }
+        else{
+            node* temp=head;
+            while(temp->next!=NULL){
+                temp=temp->next;
+            }
+            temp->next=newNode;
+            newNode->prev=temp;
+        }
+    }
+    // Time Complexity: O(n)
     void disply(){
         node*temp=head;
         while(temp!=NULL){
@@ -43,6 +69,32 @@ public:
             temp=temp->next;
         }
         cout<<endl;
+    }
+    // Time Complexity: O(1)
+    void deleteAtStart(){
+        if(head==NULL){
+            return;
+        }
+        else{
+            node* temp=head;
+            head=head->next;
+            head->prev=NULL;
+            temp->next=NULL;
+            delete temp;
+        }
+    }
+    // Time Complexity: O(n)
+    void deleteAtEnd(){
+        if(head==NULL){
+            return;
+        }
+        else{
+            node*temp=head;
+            while(temp->next->next!=NULL){
+                temp=temp->next;
+            }
+            temp->next=NULL;
+        }
     }
     void insertAtAnyIndex(int val,int pos){
         // if(head!=NULL){
@@ -60,11 +112,9 @@ public:
 };
 int main(){
     dLL dll;
-    dll.insertAtAnyIndex(2,0);
-    dll.insertAtAnyIndex(3,1);
-    dll.insertAtAnyIndex(4,2);
-    dll.insertAtAnyIndex(5,3);
-    dll.insertAtAnyIndex(6,4);
+    dll.insertAtEnd(1);
+    dll.disply();
+    dll.deleteAtEnd();
     dll.disply();
     return 0;
 }
