@@ -64,11 +64,15 @@ public:
     // Time Complexity: O(n)
     void disply(){
         node*temp=head;
+        cout<<"[ ";
         while(temp!=NULL){
-            cout<<temp->data<<" , ";
+            cout<<temp->data;
             temp=temp->next;
+            if(temp!=NULL){
+                cout<<",";
+            }
         }
-        cout<<endl;
+        cout<<" ]"<<endl;
     }
     // Time Complexity: O(1)
     void deleteAtStart(){
@@ -96,6 +100,25 @@ public:
             temp->next=NULL;
         }
     }
+    // Time Complexity: O(n)
+    int search(int key){
+        if(head==NULL){
+            return -1;
+        }
+        else{
+            node*temp=head;
+            int count=0;
+            while(temp!=NULL){
+                if(key==temp->data){
+                    return count;
+                }
+                count++;
+                temp=temp->next;
+            }
+            return -1;
+        }
+    }
+    // Time Complexity: O()
     void insertAtAnyIndex(int val,int pos){
         // if(head!=NULL){
             node*newNode=new node(val);
@@ -109,12 +132,28 @@ public:
             temp->next=newNode;
         }
     // }
+    //**************************************************************** */
+    //                  Utility Functions
+    //**************************************************************** */
+    void ifelse(int val){
+        int index=search(val);
+        if(index==-1){
+            cout<<"Piyary Bhai Element Nai Milla."<<endl;
+        }
+        else{
+            cout << "Piyary Bhai Element Found at "<<index<<" index."<<endl;
+        }
+    }
 };
 int main(){
     dLL dll;
     dll.insertAtEnd(1);
+    dll.insertAtEnd(12);
+    dll.insertAtStart(3);
+    dll.insertAtEnd(4);
+    dll.insertAtStart(5);
+    dll.insertAtEnd(7);
     dll.disply();
-    dll.deleteAtEnd();
-    dll.disply();
+    dll.ifelse(7);
     return 0;
 }
