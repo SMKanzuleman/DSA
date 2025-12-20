@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int randomPartition(vector<int> &arr, int start, int end)
+{
+    int randomIndex = start + rand() % (end - start + 1);
+    cout<<"Random pivot choosed :"<<randomIndex<<endl;
+    // swap random pivot with last element
+    swap(arr[randomIndex], arr[end]);
+
+    int i = start - 1;
+    int x = arr[end]; // pivot
+    for (int j = start; j < end; j++)
+    {
+        if (arr[j] < x) // comparing pivot with array indexes
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    i++;
+    swap(arr[i], arr[end]);
+    return i;
+}
+void quickSort(vector<int> &arr, int start, int end)
+{
+    if (start < end)
+    {
+        int pi = randomPartition(arr, start, end);
+        quickSort(arr, start, pi - 1);// subArray conatining values lesser than pivot
+        quickSort(arr, pi + 1, end);  // subArray conatining  values greater than pivot
+    }
+}
+void printVector(const vector<int> &v)
+{
+    for (int x : v)
+    {
+        cout << x << " ";
+    }
+    cout << "\n";
+}
+int main()
+{
+    vector<int> test = {6, 8, 23, 21, 62, 72, 20, 2};
+    quickSort(test, 0, test.size() - 1);
+    printVector(test);
+}
