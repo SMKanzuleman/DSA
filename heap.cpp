@@ -15,7 +15,7 @@ public:
     {
         int i = ++size;
         arr[i] = key;
-        while (i > 1)
+        while (i > 1) // Bottom to Top
         {
             int parent = i / 2;
             if (arr[i] > arr[parent])
@@ -34,29 +34,7 @@ public:
         arr[1] = arr[size];
         size--;
         int i = 1;
-        while (i <= size)
-        {
-            int leftChld = 2 * i;
-            int rightChld = 2 * i + 1;
-            int largest = i;
-            if (leftChld <= size && arr[leftChld] > arr[largest])
-            {
-                largest = leftChld;
-            }
-            if (rightChld <= size && arr[rightChld] > arr[largest])
-            {
-                largest = rightChld;
-            }
-            if (largest != i)
-            {
-                swap(arr[i], arr[largest]);
-                i = largest;
-            }
-            else
-            {
-                break;
-            }
-        }
+        heapify(arr, size, i);
     }
     void print()
     {
@@ -72,9 +50,9 @@ public:
         cout << endl
              << "-------------------------------" << endl;
     }
-    void heapify(int arr[], int n, int i)
+    void heapify(int arr[], int n, int i) // Shiftdown
     {
-        while (i >= 1)
+        while (true)
         {
             int largest = i;
             int leftChild = 2 * i;
@@ -107,6 +85,17 @@ public:
         for (int i = n / 2; i >= 1; i--)
             heapify(arr, size, i);
     }
+    void heapSort(int arr[], int n)
+    {
+        while (n > 1)
+        {
+            // 1st Step
+            swap(arr[1], arr[n]);
+            n--;
+            // 2nd Step
+            heapify(arr, n, 1);
+        }
+    }
 };
 
 int main()
@@ -124,8 +113,8 @@ int main()
     h.delNode();
     h.print();
     Heap h2;
-    int test[6] = {-1,54, 53, 55, 52, 50};
-    h2.makeheap(test,5);
+    int test[6] = {-1, 54, 53, 55, 52, 50};
+    h2.makeheap(test, 5);
     h2.print();
     cout << "Hi KanzulEman" << endl;
     return 0;
