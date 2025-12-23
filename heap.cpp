@@ -1,8 +1,9 @@
 #include <iostream>
 using namespace std;
-class Heap
+static const int MAX = 100;
+class Heap//Max heap
 {
-    int arr[100];
+    int arr[MAX];
     int size;
 
 public:
@@ -17,7 +18,7 @@ public:
         while (i > 1)
         {
             int parent = i / 2;
-            if (arr[parent] < arr[i])
+            if (arr[i] > arr[parent])
             {
                 swap(arr[parent], arr[i]);
                 i = parent;
@@ -31,18 +32,18 @@ public:
     void delNode()
     {
         arr[1] = arr[size];
-        int i = 1;
         size--;
+        int i = 1;
         while (i <= size)
         {
             int leftChld = 2 * i;
             int rightChld = 2 * i + 1;
             int largest=i;
-            if (leftChld <= size && arr[leftChld] > arr[rightChld])
+            if (leftChld <= size && arr[leftChld] > arr[largest])
             {
                 largest = leftChld;
             }
-            if (rightChld <= size && arr[rightChld] > arr[leftChld])
+            if (rightChld <= size && arr[rightChld] > arr[largest])
             {
                 largest = rightChld;
             }
@@ -61,9 +62,14 @@ public:
     {
         for (int i = 1; i <= size; i++)
         {
-            cout << arr[i] << " ";
+            cout << arr[i] << " " ;
         }
         cout << endl;
+        for (int i = 1; i <= size; i++)
+        {
+            cout << i << "  ";
+        }
+        cout << endl<< "-------------------------------" << endl;
     }
 };
 
