@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 static const int MAX = 100;
-class Heap//Max heap
+class Heap // Max heap
 {
     int arr[MAX];
     int size;
@@ -38,7 +38,7 @@ public:
         {
             int leftChld = 2 * i;
             int rightChld = 2 * i + 1;
-            int largest=i;
+            int largest = i;
             if (leftChld <= size && arr[leftChld] > arr[largest])
             {
                 largest = leftChld;
@@ -47,7 +47,7 @@ public:
             {
                 largest = rightChld;
             }
-            if (largest!=i)
+            if (largest != i)
             {
                 swap(arr[i], arr[largest]);
                 i = largest;
@@ -62,14 +62,50 @@ public:
     {
         for (int i = 1; i <= size; i++)
         {
-            cout << arr[i] << " " ;
+            cout << arr[i] << " ";
         }
         cout << endl;
         for (int i = 1; i <= size; i++)
         {
             cout << i << "  ";
         }
-        cout << endl<< "-------------------------------" << endl;
+        cout << endl
+             << "-------------------------------" << endl;
+    }
+    void heapify(int arr[], int n, int i)
+    {
+        while (i >= 1)
+        {
+            int largest = i;
+            int leftChild = 2 * i;
+            int rightChild = 2 * i + 1;
+            if (leftChild <= n && arr[leftChild] > arr[largest])
+            {
+                largest = leftChild;
+            }
+            if (rightChild <= n && arr[rightChild] > arr[largest])
+            {
+                largest = rightChild;
+            }
+            if (largest != i)
+            {
+                swap(arr[i], arr[largest]);
+                i = largest;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    void makeheap(int a[], int n)
+    {
+        size = n;
+        for (int i = 1; i <= n; i++)
+            arr[i] = a[i];
+
+        for (int i = n / 2; i >= 1; i--)
+            heapify(arr, size, i);
     }
 };
 
@@ -87,7 +123,10 @@ int main()
     h.print();
     h.delNode();
     h.print();
-
+    Heap h2;
+    int test[6] = {-1,54, 53, 55, 52, 50};
+    h2.makeheap(test,5);
+    h2.print();
     cout << "Hi KanzulEman" << endl;
     return 0;
 }
