@@ -50,6 +50,16 @@ public:
         cout << endl
              << "-------------------------------" << endl;
     }
+    void print(int dummy[], int n)
+    {
+
+        for (int i = 1; i <= n; i++)
+        {
+            cout << dummy[i] << "  ";
+        }
+        cout << endl
+             << "-------------------------------" << endl;
+    }
     void heapify(int arr[], int n, int i) // Shiftdown
     {
         while (true)
@@ -78,22 +88,21 @@ public:
     }
     void makeheap(int a[], int n)
     {
-        size = n;
-        for (int i = 1; i <= n; i++)
-            arr[i] = a[i];
-
         for (int i = n / 2; i >= 1; i--)
-            heapify(arr, size, i);
+            heapify(a, n, i);
+    
     }
-    void heapSort(int arr[], int n)
-    {
-        while (n > 1)
-        {
-            // 1st Step
-            swap(arr[1], arr[n]);
-            n--;
-            // 2nd Step
-            heapify(arr, n, 1);
+    void heapSort(int a[], int n)
+    { // O(n)+O(n-1)*logn=O(nlogn)
+
+        makeheap(a,n); 
+        int t=n;
+        while(t>1){
+            //first step
+            swap(a[1],a[t]);
+            t--;
+            //second step
+            heapify(a,t,1);
         }
     }
 };
@@ -101,6 +110,7 @@ public:
 int main()
 {
     Heap h;
+    // Insertion
     h.insert(50);
     h.insert(40);
     h.insert(30);
@@ -110,12 +120,18 @@ int main()
     h.insert(28);
     h.insert(75);
     h.print();
+    // Deletion
     h.delNode();
     h.print();
+    // Heapify 
     Heap h2;
     int test[6] = {-1, 54, 53, 55, 52, 50};
     h2.makeheap(test, 5);
-    h2.print();
+    h2.print(test,5);
+    // Heap Sort
+    h2.heapSort(test, 5);
+    h2.print(test, 5);
+
     cout << "Hi KanzulEman" << endl;
     return 0;
 }
