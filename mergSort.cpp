@@ -1,59 +1,66 @@
 #include <iostream>
-#include <vector>
 using namespace std;
-void merg(vector<int> &arr, int start, int mid, int end)
+//Big O(nlogn)
+void mergSort(int arr[], int L, int R) 
 {
-    vector<int> temp;
-    int i = start, j = mid + 1;
-    while (i <= mid && j <= end)
+    if (L < R) // log(n)
+    {
+        int mid = L + (R - L) / 2;
+        mergSort(arr, L, mid);
+        mergSort(arr, mid + 1, R);
+        merg(arr, L, mid, R); //(n)
+    }
+}
+void merg(int arr[], int L, int mid, int R)
+{
+    int size=(R-L)+1;
+    int temp[size];
+    int i = L;
+    int j = mid + 1;
+    int k=0;//for iterating temp array
+    while (i <= mid && j <= R)
     {
         if (arr[i] < arr[j])
         {
-            temp.push_back(arr[i]);
+            temp[k]=arr[i];
             i++;
         }
         else
         {
-            temp.push_back(arr[j]);
+            temp[k]=arr[j];
             j++;
         }
+        k++;
     }
+    //copy remaining list elements to temp array data 
     while (i <= mid)
     {
-        temp.push_back(arr[i]);
+        temp[k]=arr[i];
+        k++;
         i++;
     }
-    while (j <= end)
+    while (j <= R)
     {
-        temp.push_back(arr[j]);
+        temp[k]=arr[j];
+        k++;
         j++;
     }
-    for (int i = 0; i < temp.size(); i++)
+    //copying temp array data to orignal array
+    for (int i = L; i <= R; i++)
     {
-        arr[i + start] = temp[i];
+        arr[i] = temp[i-L];
     }
 }
-void mergSort(vector<int> &arr, int start, int end)
-{
-    if (start < end)
-    {
-        int mid = start + (end - start) / 2;
-        mergSort(arr, start, mid);
-        mergSort(arr, mid + 1, end);
-        merg(arr, start, mid, end);
-    }
-}
-void printVector(const vector<int> &v)
-{
-    for (int x : v)
-    {
-        cout << x << " ";
+
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
     }
     cout << "\n";
 }
 int main()
 {
-    vector<int> test = {6, 8, 23, 21, 62, 72, 20, 2};
-    mergSort(test, 0, test.size() - 1);
-    printVector(test);
+    int test[8] = {6, 8, 23, 21, 62, 72, 20, 2};
+    mergSort(test, 0, 7);
+    printArray(test,8);
 }
