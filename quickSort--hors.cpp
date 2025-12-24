@@ -1,49 +1,51 @@
 #include <iostream>
-#include <vector>
 using namespace std;
-int horsPartition(vector<int> &arr, int start, int end)
+int hoarePartition(int arr[], int L, int H)
 {
-    int x = arr[start];
-    int i = start - 1;
-    int j = end + 1;
+    int pivot = arr[L];
+    int i = L - 1;
+    int j = H + 1;
     while (true)
     {
         do
         {
-            j = j - 1;
-        } while (arr[j] > x);
+            i++;
+        } while (arr[i] < pivot);
         do
         {
-            i = i + 1;
-        } while (arr[i] < x);
-        if (i < j)
+            j--;
+        } while (arr[j] > pivot);
+
+
+        if (i >= j)
         {
-            swap(arr[i], arr[j]);
+            return j;
         }
-        return j;
+        swap(arr[i], arr[j]);
     }
 }
 
-void quickSort(vector<int> &arr, int start, int end)
+void quickSort(int arr[], int L, int H)
 {
-    if (start < end)
+    if (L < H)
     {
-        int pi = horsPartition(arr, start, end);
-        quickSort(arr, start, pi - 1); // subArray conatining values lesser than pivot
-        quickSort(arr, pi + 1, end);   // subArray conatining  values greater than pivot
+        int pi = hoarePartition(arr, L, H);
+        quickSort(arr, L, pi); // subArray conatining values lesser than pivot
+        quickSort(arr, pi + 1, H);   // subArray conatining  values greater than pivot
     }
 }
-void printVector(const vector<int> &v)
-{
-    for (int x : v)
-    {
-        cout << x << " ";
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
     }
     cout << "\n";
 }
+
 int main()
 {
-    vector<int> test = {20,10,40,30,50};
-    quickSort(test, 0, test.size() - 1);
-    printVector(test);
+    int test[] = {20,10,40,30,50};
+    int size= sizeof(test) / sizeof(test[0]);
+    cout<<size<<endl;
+    quickSort(test, 0, size - 1);
+    printArray(test, size);
 }
