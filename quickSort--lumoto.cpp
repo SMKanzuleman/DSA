@@ -1,42 +1,40 @@
 #include <iostream>
-#include <vector>
 using namespace std;
-int lumotoPartition(vector<int> &arr, int start, int end)
+int lumotoPartition(int arr[], int L, int H)
 {
-    int i = start - 1;
-    int x = arr[end]; // pivot
-    for (int j = start; j < end; j++)
+    int i = L ;
+    int pivot = arr[H]; // pivot
+    for (int j = L; j < H; j++)
     {
-        if (arr[j] < x) // comparing pivot with array indexes
+        if (arr[j] < pivot) // comparing pivot with array indepivotes
         {
             i++;
             swap(arr[i], arr[j]);
         }
     }
     i++;
-    swap(arr[i], arr[end]);
+    swap(arr[i], arr[H]);
     return i;
 }
-void quickSort(vector<int> &arr, int start, int end)
+void quickSort(int arr[], int L, int H)
 {
-    if (start < end)
+    if (L < H)
     {
-        int pi = lumotoPartition(arr, start, end);
-        quickSort(arr, start, pi - 1);// subArray conatining values lesser than pivot
-        quickSort(arr, pi + 1, end);  // subArray conatining  values greater than pivot
+        int pi = lumotoPartition(arr, L, H);
+        quickSort(arr, L, pi - 1);// subArray conatining values lesser than pivot
+        quickSort(arr, pi + 1, H);  // subArray conatining  values greater than pivot
     }
 }
-void printVector(const vector<int> &v)
-{
-    for (int x : v)
-    {
-        cout << x << " ";
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
     }
     cout << "\n";
 }
 int main()
 {
-    vector<int> test = {6, 8, 23, 21, 62, 72, 20, 2};
-    quickSort(test, 0, test.size() - 1);
-    printVector(test);
+    int test[] = {6, 8, 23, 21, 62, 72, 20, 2};
+    int size= sizeof(test) / sizeof(test[0]);
+    quickSort(test, 0, size - 1);
+    printArray(test, size);
 }
