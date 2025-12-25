@@ -39,7 +39,7 @@ public:
             else
             {
                 cout << "Duplicate found!!!" << endl;
-                continue;
+                return;
             }
         }
         if (newNode->data < back->data)
@@ -59,9 +59,25 @@ public:
             cout << "Tree is empty" << endl;
             return;
         }
-        node *temp = root;
-        node *back = nullptr;
-        temp=search(key);
+        node *temp = root;    // that will traverse
+        node *back = nullptr; // stop at exact location to where left or right we will insert our node
+        while (temp)
+        {
+            if (key < temp->data)
+            {
+                back = temp;
+                temp = temp->lChild;
+            }
+            else if (key > temp->data)
+            {
+                back = temp;
+                temp = temp->rChild;
+            }
+            else
+            {
+                break;
+            }
+        }
         if (temp == nullptr)
         {
             cout << "Key not found" << endl;
@@ -122,7 +138,7 @@ public:
             suc = suc->lChild;
         }
         temp->data = suc->data;
-        if (suc_back->lChild == suc)
+        if (suc_back!=temp)
         {
             suc_back->lChild = suc->rChild;
         }
@@ -220,7 +236,19 @@ public:
             }
         }
     }
-    
+    bool validate(node* temp,long long minVal,long long maxVal){
+        if(!temp)
+            return true;
+        if(temp->data>=maxVal || temp->data<=minVal)
+            return false;
+        bool left=validate(temp->lChild,minVal,temp->data);
+        bool right=validate(temp->rChild,temp->data,maxVal);
+
+        return left&&right;
+    }
+    bool isValidBST(){
+        return validate(root,LLONG_MIN,LLONG_MAX);
+    }
 };
 int main()
 {
@@ -239,4 +267,5 @@ int main()
     cout << "Min: " << t1.min() << endl;
     t1.deleteNode(70);
     t1.printInorder();
+    cout<<t1.isValidBST();
 }
