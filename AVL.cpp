@@ -146,7 +146,7 @@ public:
         {
             temp->rChild = delnode(temp->rChild, key);
         }
-        else
+        else//temp ko to exact that index we want to delete valeu
         {
             // Case 1 & 2: node has 0 or 1 child
             if (temp->lChild == nullptr || temp->rChild == nullptr)
@@ -268,4 +268,5 @@ int main()
     cout<<t1.height()<<endl;
     cout<<"balancing factor of root: "<<t1.balanceFactor(t1.search(30))<<endl;
     return 0;
+    //"https://d.docs.live.net/47ED0824130BFC11/Documents/Shajra.xlsx"
 }
