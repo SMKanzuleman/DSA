@@ -236,7 +236,8 @@ public:
             }
         }
     }
-    bool validate(node* temp,long long minVal,long long maxVal){
+    bool validate(node* temp,long long minVal,long long maxVal)
+    {
         if(!temp)
             return true;
         if(temp->data>=maxVal || temp->data<=minVal)
@@ -246,7 +247,8 @@ public:
 
         return left&&right;
     }
-    bool isValidBST(){
+    bool isValidBST()
+    {
         return validate(root,LLONG_MIN,LLONG_MAX);
     }
 };
